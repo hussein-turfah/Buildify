@@ -17,17 +17,17 @@ export default function SideNav({ children, setChildren }) {
       category: "Buttons",
     },
     {
-      name: "text",
+      name: "Text",
       element: <p className={styles.text}>text</p>,
-      category: "text",
+      category: "Text",
     },
     {
-      name: "heading",
+      name: "Heading",
       element: <h1 className={styles.heading}>heading</h1>,
-      category: "text",
+      category: "Text",
     },
     {
-      name: "image",
+      name: "Image",
       element: (
         <div className={styles.image}>
           <img
@@ -37,7 +37,7 @@ export default function SideNav({ children, setChildren }) {
           />
         </div>
       ),
-      category: "images",
+      category: "Images",
     },
   ];
   useEffect(() => {
@@ -72,28 +72,22 @@ export default function SideNav({ children, setChildren }) {
           return (
             <div key={index} className={styles.sidebarItemCon}>
               <h3 className={styles.sidebarCateg}>{key}</h3>
-              <div
-              className={styles.itemsContainer}
-              >
-              {groupedChildren[key].map((child, index) => {
-                return (
-                  <div
-                    key={index}
-                    className={styles.sidebarItem}
-                    onClick={() => {
-                      setChildren([...children, child.element]);
-                    }}
-                  >
+              <div className={styles.itemsContainer}>
+                {groupedChildren[key].map((child, index) => {
+                  return (
                     <div
-                      className={styles.element}
+                      key={index}
+                      className={styles.sidebarItem}
+                      onClick={() => {
+                        setChildren([...children, child.element]);
+                      }}
                     >
-                    {child.element}
+                      <p className={styles.sidebarItemText}>{child.name}</p>
+                      <div className={styles.element}>{child.element}</div>
                     </div>
-                    <p className={styles.sidebarItemText}>{child.name}</p>
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
             </div>
           );
         })}
