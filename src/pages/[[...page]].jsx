@@ -1,21 +1,12 @@
 import Head from "next/head";
 import ResizableComponent from "../../common/resizablebutton";
+import styles from "./styles/index.module.css";
 
 export default function Page() {
   return (
-    <div>
-      <Head>
-        <title>Next.js example</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <div
-        style={{
-          width: "100%",
-          height: "100vh",
-          backgroundColor: "orange",
-        }}
-      >
+    <div className={styles.container}>
+      <div className={styles.sidebar}></div>
+      <div>
         <ResizableComponent />
       </div>
     </div>
