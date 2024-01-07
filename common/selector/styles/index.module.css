@@ -1,0 +1,34 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(192, 186, 186);
+  padding: 3px 1px;
+  border-radius: 5px;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  border: 1px solid transparent;
+  margin-bottom: 20px;
+  user-select: none;
+
+
+  .item {
+    padding: 3px 0.7vw;
+
+    &.selected {
+      background-color: white;
+      margin: 0 5px;
+      height: fit-content;
+      width: fit-content;
+      border-radius: 5px;
+    }
+
+    .itemText {
+      font-size: 20px;
+      font-weight: 500;
+      color: black;
+      margin: 0 5px;
+    }
+  }
+}
