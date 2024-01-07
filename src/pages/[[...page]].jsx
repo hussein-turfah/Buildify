@@ -15,7 +15,7 @@ export default function Page() {
         <link rel="icon" href="/favicon.svg" />
       </Head>
       <Nav />
-      <SideNav />
+      <SideNav children={children} setChildren={setChildren} />
       <>
         <div>
           {children.map((child, index) => {
