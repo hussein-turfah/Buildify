@@ -11,7 +11,52 @@ export const InputModal = ({
   const [src, setSrc] = useState("");
   const [text, setText] = useState("");
 
-  
+  useEffect(() => {
+    if (showInputModal) {
+      document.querySelector("input").focus();
+    }
+  }, [showInputModal]);
+
+  useEffect(() => {
+    const handleEnter = (e) => {
+      if (e.key === "Enter") {
+        setShowInputModal(false);
+        const newElement = {
+          ...element,
+          text: text,
+          src: src,
+          id: Math.random() * 1000,
+          element: (
+            <div className={styles.container}>
+              {element.name === "Button" ? (
+                <button className={styles.button}>{text}</button>
+              ) : element.name === "Round Button" ? (
+                <button className={styles.roundButton}>{text}</button>
+              ) : element.name === "Text" ? (
+                <p className={styles.text}>{text}</p>
+              ) : element.name === "Heading" ? (
+                <h1 className={styles.heading}>{text}</h1>
+              ) : element.name === "Image" ? (
+                <div className={styles.image}>
+                  <img
+                    src={src}
+                    alt="Image Placeholder"
+                    className={styles.img}
+                  />
+                </div>
+              ) : (
+                <div></div>
+              )}
+            </div>
+          ),
+        };
+        setChildren([...children, newElement]);
+        setElement({});
+      }
+    };
+    document.addEventListener("keydown", handleEnter);
+    return () => document.removeEventListener("keydown", handleEnter);
+  }, [text, src]);
 
   useEffect(() => {
     if (element.name === "Image") {
