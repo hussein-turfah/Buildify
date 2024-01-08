@@ -7,7 +7,6 @@ export const InputModal = ({
   children,
   element,
   setElement,
-  setCodeToCopy,
 }) => {
   const [src, setSrc] = useState("");
   const [text, setText] = useState("");
@@ -19,39 +18,27 @@ export const InputModal = ({
   }, [showInputModal]);
 
   useEffect(() => {
-    console.log("children", children);
-  }, [children]);
-
-  useEffect(() => {
     const handleEnter = (e) => {
       if (e.key === "Enter" || e.type === "touchstart") {
+        const style = { width: "100%", height: "100%" };
         const newElement = {
           ...element,
           text: text,
           id: Math.random() * 1000,
           element:
             element.name === "Button" ? (
-              <button className={styles.element}>{text}</button>
+              <button style={style}>{text}</button>
             ) : element.name === "Round Button" ? (
-              <button className={styles.element}>{text}</button>
+              <button style={style}>{text}</button>
             ) : element.name === "Text" ? (
-              <p className={styles.element}>{text}</p>
+              <p style={style}>{text}</p>
             ) : element.name === "Heading" ? (
-              <h1 className={styles.element}>{text}</h1>
+              <h1 style={style}>{text}</h1>
             ) : (
               <div></div>
             ),
         };
         setChildren([...children, newElement]);
-        setCodeToCopy(
-          `<div style="width: ${
-            element.name === "Image" ? "auto" : "100px"
-          }; height: ${
-            element.name === "Image" ? "auto" : "100px"
-          }; position: absolute; top: 0px; left: 0px;">${
-            newElement.element.props.children
-          }</div>`
-        );
         setShowInputModal(false);
         setElement({});
       }
