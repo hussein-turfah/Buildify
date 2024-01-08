@@ -21,9 +21,6 @@ const ResizableComponent = ({ child }) => {
       onResize={(e, direction, ref, d) => {
         handleFontSizeChange(ref.offsetWidth);
       }}
-      onDragStop={(e, d) => {
-        handleDragStop(e, d);
-      }}
     >
       <div className={styles.element} style={{ fontSize: `${fontSize}px` }}>
         {child.element}
