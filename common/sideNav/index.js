@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Selector from "../selector";
 import styles from "./styles/index.module.css";
 import ClipboardJS from "clipboard";
+import Image from "next/image";
 
 export default function SideNav({ setShowInputModal, setElement, codeToCopy }) {
   const [groupedChildren, setGroupedChildren] = useState({});
@@ -76,6 +77,16 @@ export default function SideNav({ setShowInputModal, setElement, codeToCopy }) {
 
   return (
     <div className={styles.sidebar}>
+      <div className={styles.webLogo}>
+        <Image
+          src="/logo.svg"
+          width={270}
+          height={70}
+          objectFit="contain"
+          alt="logo"
+          priority
+        />
+      </div>
       <div className={styles.sidebarHeader}>
         <Selector
           children={[
