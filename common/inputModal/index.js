@@ -65,7 +65,7 @@ export const InputModal = ({
   }, [element]);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.containerLarge}>
       <input
         onBlur={() => {
           setShowInputModal(false);
