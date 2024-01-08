@@ -1,7 +1,7 @@
 import Head from "next/head";
 import ResizableComponent from "../../common/resizableComponent";
 import styles from "./styles/index.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Nav from "../../common/Nav";
 import SideNav from "../../common/sideNav";
 import { InputModal } from "../../common/inputModal";
@@ -12,6 +12,12 @@ export default function Page() {
   const [text, setText] = useState("");
   const [element, setElement] = useState(null);
   const [codeToCopy, setCodeToCopy] = useState("");
+  const codeContainerRef = useRef(null);
+
+  useEffect(() => {
+    const codeToCopy = codeContainerRef.current.innerHTML;
+    setCodeToCopy(codeToCopy);
+  }, [children]);
 
   return (
     <div className={styles.container}>
@@ -36,25 +42,17 @@ export default function Page() {
           setChildren={setChildren}
           element={element}
           setElement={setElement}
-          setCodeToCopy={setCodeToCopy}
         >
           {children}
         </InputModal>
       )}
-      <div
-        onChange={(e, ref) => {
-          setCodeToCopy(
-            `<div style="width: ${width}px; height: ${height}px;">${ref.innerHTML}</div>`
-          );
-        }}
-      >
+      <div ref={codeContainerRef}>
         {children.map((child, index) => {
           return (
             <ResizableComponent
               key={index}
               className={styles.resizableComponent}
               child={child}
-              setCodeToCopy={setCodeToCopy}
             />
           );
         })}
