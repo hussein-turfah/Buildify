@@ -1,30 +1,36 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Selector from "../selector";
 import styles from "./styles/index.module.css";
+import ClipboardJS from "clipboard";
 
-export default function SideNav({ children, setChildren }) {
+export default function SideNav({ setShowInputModal, setElement, codeToCopy }) {
   const [groupedChildren, setGroupedChildren] = useState({});
+  const copyButtonRef = useRef(null);
 
   const staticChildren = [
     {
       name: "Button",
       element: <button className={styles.button}>Button</button>,
       category: "Buttons",
+      id: 1,
     },
     {
       name: "Round Button",
       element: <button className={styles.roundButton}>Button</button>,
       category: "Buttons",
+      id: 2,
     },
     {
       name: "Text",
       element: <p className={styles.text}>text</p>,
       category: "Text",
+      id: 3,
     },
     {
       name: "Heading",
       element: <h1 className={styles.heading}>heading</h1>,
       category: "Text",
+      id: 4,
     },
     {
       name: "Image",
@@ -38,8 +44,11 @@ export default function SideNav({ children, setChildren }) {
         </div>
       ),
       category: "Images",
+      src: "",
+      id: 5,
     },
   ];
+
   useEffect(() => {
     staticChildren.forEach((child) => {
       if (groupedChildren[child.category]) {
@@ -50,6 +59,20 @@ export default function SideNav({ children, setChildren }) {
     });
     setGroupedChildren(groupedChildren);
   });
+
+  useEffect(() => {
+    if (copyButtonRef.current) {
+      const clipboard = new ClipboardJS(copyButtonRef.current, {
+        text: () => codeToCopy,
+      });
+      clipboard.on("success", function (e) {
+        console.log(e);
+      });
+      clipboard.on("error", function (e) {
+        console.log(e);
+      });
+    }
+  }, [copyButtonRef, codeToCopy]);
 
   return (
     <div className={styles.sidebar}>
@@ -79,7 +102,8 @@ export default function SideNav({ children, setChildren }) {
                       key={index}
                       className={styles.sidebarItem}
                       onClick={() => {
-                        setChildren([...children, child.element]);
+                        setShowInputModal(true);
+                        setElement(child);
                       }}
                     >
                       <p className={styles.sidebarItemText}>{child.name}</p>
@@ -94,8 +118,10 @@ export default function SideNav({ children, setChildren }) {
 
         <button
           className={styles.publishButton}
+          ref={copyButtonRef}
+          data-clipboard-text={codeToCopy}
           onClick={() => {
-            console.log("publish");
+            navigator.clipboard.writeText(codeToCopy);
           }}
         >
           Publish Code
