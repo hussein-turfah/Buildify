@@ -1,39 +1,38 @@
 import Draggable from "react-draggable";
 import { Resizable } from "re-resizable";
 import styles from "./styles/index.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Rnd } from "react-rnd";
 
 const ResizableComponent = ({ child, setCodeToCopy }) => {
   const [height, setHeight] = useState(100);
   const [width, setWidth] = useState(100);
-
   return (
-    <Draggable
-      onStop={(e, data) => {
+    <Rnd
+      default={{
+        x: 0,
+        y: 0,
+        // width: 320,
+        // height: 200,
+      }}
+      onResizeStop={(e, direction, ref, d) => {
+        setWidth(width + d.width);
+        setHeight(height + d.height);
         setCodeToCopy(
-          `<div style="width: ${width}px; height: ${height}px; position: absolute; top: ${data.y}px; left: ${data.x}px;">${child.code}</div>`
+          `<div style="width: ${width}px; height: ${height}px; position: absolute; top: ${ref.offsetTop}px; left: ${ref.offsetLeft}px;">${child.code}</div>`
         );
       }}
+      onDragStop={(e, d) => {
+        setCodeToCopy(
+          `<div style="width: ${width}px; height: ${height}px; position: absolute; top: ${d.y}px; left: ${d.x}px;">${child.code}</div>`
+        );
+      }}
+      // className={styles.draggable}
     >
-      <Resizable
-        className={styles.container}
-        size={{ width: width, height: height }}
-        onResizeStop={(ref, d) => {
-          setHeight(height + d.height);
-          setWidth(width + d.width);
-          setCodeToCopy(
-            `<div style="width: ${width}px; height: ${height}px;">${ref.innerHTML}</div>`
-          );
-        }}
-      >
-        <div
-          className={styles.element}
-          style={{ width: width, height: height }}
-        >
-          {child.element}
-        </div>
-      </Resizable>
-    </Draggable>
+      {/* <div className={styles.element}> */}
+      {child.element}
+      {/* </div> */}
+    </Rnd>
   );
 };
 
