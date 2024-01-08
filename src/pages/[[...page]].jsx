@@ -15,10 +15,14 @@ export default function Page() {
   const codeContainerRef = useRef(null);
 
   useEffect(() => {
-    const codeToCopy = codeContainerRef.current.innerHTML;
+    const codeToCopy = getCodeToCopy();
     setCodeToCopy(codeToCopy);
   }, [children]);
 
+  const getCodeToCopy = () => {
+    const innerHTML = codeContainerRef.current.children[0].innerHTML;
+    return innerHTML;
+  };
   return (
     <div className={styles.container}>
       <Head>
