@@ -21,16 +21,12 @@ export default function Page() {
       </Head>
       {/* <Nav /> */}
       <SideNav
-        children={children}
-        setChildren={setChildren}
-        showInputModal={showInputModal}
         setShowInputModal={setShowInputModal}
-        text={text}
-        setText={setText}
-        element={element}
         setElement={setElement}
         codeToCopy={codeToCopy}
-      />
+      >
+        {children}
+      </SideNav>
       {showInputModal && (
         <InputModal
           text={text}
@@ -38,11 +34,12 @@ export default function Page() {
           showInputModal={showInputModal}
           setShowInputModal={setShowInputModal}
           setChildren={setChildren}
-          children={children}
           element={element}
           setElement={setElement}
           setCodeToCopy={setCodeToCopy}
-        />
+        >
+          {children}
+        </InputModal>
       )}
       <div
         onChange={(e, ref) => {
