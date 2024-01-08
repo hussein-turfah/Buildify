@@ -7,6 +7,7 @@ export const InputModal = ({
   children,
   element,
   setElement,
+  setCodeToCopy,
 }) => {
   const [src, setSrc] = useState("");
   const [text, setText] = useState("");
@@ -51,6 +52,15 @@ export const InputModal = ({
           ),
         };
         setChildren([...children, newElement]);
+        setCodeToCopy(
+          `<div style="width: ${
+            element.name === "Image" ? "auto" : "100px"
+          }; height: ${
+            element.name === "Image" ? "auto" : "100px"
+          }; position: absolute; top: 0px; left: 0px;">${
+            newElement.element.props.children
+          }</div>`
+        );
         setElement({});
       }
     };
