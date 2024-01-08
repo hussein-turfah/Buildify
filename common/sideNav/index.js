@@ -116,6 +116,13 @@ export default function SideNav({ setShowInputModal, setElement, codeToCopy }) {
                         setShowInputModal(true);
                         setElement(child);
                       }}
+
+                      onTouchStart={() => {
+                        setShowInputModal(true);
+                        setElement(child);
+                      }
+                      }
+
                     >
                       <p className={styles.sidebarItemText}>{child.name}</p>
                       <div className={styles.element}>{child.element}</div>

@@ -20,7 +20,7 @@ export const InputModal = ({
 
   useEffect(() => {
     const handleEnter = (e) => {
-      if (e.key === "Enter") {
+      if (e.key === "Enter" || e.type === "touchstart") {
         setShowInputModal(false);
         const newElement = {
           ...element,
@@ -62,7 +62,11 @@ export const InputModal = ({
       }
     };
     document.addEventListener("keydown", handleEnter);
-    return () => document.removeEventListener("keydown", handleEnter);
+    document.addEventListener("touchstart", handleEnter);
+    return () => {
+      document.removeEventListener("keydown", handleEnter);
+      document.removeEventListener("touchstart", handleEnter);
+    };
   }, [text, src]);
 
   useEffect(() => {
