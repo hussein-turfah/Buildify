@@ -41,6 +41,7 @@ export default function Page() {
           children={children}
           element={element}
           setElement={setElement}
+          setCodeToCopy={setCodeToCopy}
         />
       )}
       <div
