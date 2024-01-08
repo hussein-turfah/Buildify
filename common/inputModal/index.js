@@ -19,13 +19,15 @@ export const InputModal = ({
   }, [showInputModal]);
 
   useEffect(() => {
+    console.log("children", children);
+  }, [children]);
+
+  useEffect(() => {
     const handleEnter = (e) => {
       if (e.key === "Enter" || e.type === "touchstart") {
-        setShowInputModal(false);
         const newElement = {
           ...element,
           text: text,
-          src: src,
           id: Math.random() * 1000,
           element:
             element.name === "Button" ? (
@@ -36,14 +38,6 @@ export const InputModal = ({
               <p className={styles.element}>{text}</p>
             ) : element.name === "Heading" ? (
               <h1 className={styles.element}>{text}</h1>
-            ) : element.name === "Image" ? (
-              <div className={styles.element}>
-                <img
-                  src={src}
-                  alt="Image Placeholder"
-                  className={styles.element}
-                />
-              </div>
             ) : (
               <div></div>
             ),
@@ -58,6 +52,7 @@ export const InputModal = ({
             newElement.element.props.children
           }</div>`
         );
+        setShowInputModal(false);
         setElement({});
       }
     };
@@ -67,20 +62,14 @@ export const InputModal = ({
       document.removeEventListener("keydown", handleEnter);
       document.removeEventListener("touchstart", handleEnter);
     };
-  }, [text, src]);
-
-  useEffect(() => {
-    if (element.name === "Image") {
-      setSrc(URL.createObjectURL(element.src));
-    }
-  }, [element]);
+  }, [text]);
 
   return (
     <div className={styles.containerLarge}>
       <input
         onBlur={() => {
-          setShowInputModal(false);
           setText("");
+          element.name !== "Image" ? setShowInputModal(false) : "";
         }}
         className={styles.input}
         value={
@@ -89,7 +78,7 @@ export const InputModal = ({
           element.name === "Text" ||
           element.name === "Heading"
             ? text
-            : src
+            : ""
         }
         onChange={(e) => {
           if (
@@ -100,11 +89,26 @@ export const InputModal = ({
           ) {
             setText(e.target.value);
           } else {
-            setSrc(e.target.value);
+            setSrc(URL.createObjectURL(e.target.files[0]));
+            const newElement = {
+              ...element,
+              src: URL.createObjectURL(e.target.files[0]),
+              id: Math.random() * 1000,
+              element: (
+                <img
+                  className={styles.element}
+                  src={URL.createObjectURL(e.target.files[0])}
+                  style={{ width: "100%", height: "100%" }}
+                />
+              ),
+            };
+            setChildren([...children, newElement]);
+            setShowInputModal(false);
           }
         }}
         placeholder="Enter your text here and then press enter"
         type={element.name === "Image" ? "file" : "text"}
+        accept={element.name === "Image" ? "image/*" : undefined}
       />
     </div>
   );
