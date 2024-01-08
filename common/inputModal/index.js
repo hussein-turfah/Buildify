@@ -27,29 +27,26 @@ export const InputModal = ({
           text: text,
           src: src,
           id: Math.random() * 1000,
-          element: (
-            <div className={styles.container}>
-              {element.name === "Button" ? (
-                <button className={styles.button}>{text}</button>
-              ) : element.name === "Round Button" ? (
-                <button className={styles.roundButton}>{text}</button>
-              ) : element.name === "Text" ? (
-                <p className={styles.text}>{text}</p>
-              ) : element.name === "Heading" ? (
-                <h1 className={styles.heading}>{text}</h1>
-              ) : element.name === "Image" ? (
-                <div className={styles.image}>
-                  <img
-                    src={src}
-                    alt="Image Placeholder"
-                    className={styles.img}
-                  />
-                </div>
-              ) : (
-                <div></div>
-              )}
-            </div>
-          ),
+          element:
+            element.name === "Button" ? (
+              <button className={styles.element}>{text}</button>
+            ) : element.name === "Round Button" ? (
+              <button className={styles.element}>{text}</button>
+            ) : element.name === "Text" ? (
+              <p className={styles.element}>{text}</p>
+            ) : element.name === "Heading" ? (
+              <h1 className={styles.element}>{text}</h1>
+            ) : element.name === "Image" ? (
+              <div className={styles.element}>
+                <img
+                  src={src}
+                  alt="Image Placeholder"
+                  className={styles.element}
+                />
+              </div>
+            ) : (
+              <div></div>
+            ),
         };
         setChildren([...children, newElement]);
         setCodeToCopy(
