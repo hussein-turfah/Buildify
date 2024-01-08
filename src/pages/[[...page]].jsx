@@ -19,7 +19,7 @@ export default function Page() {
         <title>Buildify</title>
         <link rel="icon" href="/favicon.svg" />
       </Head>
-      <Nav />
+      {/* <Nav /> */}
       <SideNav
         children={children}
         setChildren={setChildren}
