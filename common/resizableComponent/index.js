@@ -8,23 +8,26 @@ const ResizableComponent = ({ child, setCodeToCopy }) => {
   const [width, setWidth] = useState(100);
 
   return (
-    <div>
-      <Draggable>
-        <Resizable
-          className={styles.container}
-          size={{ width: width, height: height }}
-          onResizeStop={(e, direction, ref, d) => {
-            setHeight(height + d.height);
-            setWidth(width + d.width);
-            setCodeToCopy(
-              `<div style="width: ${width}px; height: ${height}px;">${ref.innerHTML}</div>`
-            );
-          }}
+    <Draggable>
+      <Resizable
+        className={styles.container}
+        size={{ width: width, height: height }}
+        onResizeStop={(ref, d) => {
+          setHeight(height + d.height);
+          setWidth(width + d.width);
+          setCodeToCopy(
+            `<div style="width: ${width}px; height: ${height}px;">${ref.innerHTML}</div>`
+          );
+        }}
+      >
+        <div
+          className={styles.element}
+          style={{ width: width, height: height }}
         >
           {child.element}
-        </Resizable>
-      </Draggable>
-    </div>
+        </div>
+      </Resizable>
+    </Draggable>
   );
 };
 
