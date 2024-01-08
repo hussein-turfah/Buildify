@@ -8,7 +8,13 @@ const ResizableComponent = ({ child, setCodeToCopy }) => {
   const [width, setWidth] = useState(100);
 
   return (
-    <Draggable>
+    <Draggable
+      onStop={(e, data) => {
+        setCodeToCopy(
+          `<div style="width: ${width}px; height: ${height}px; position: absolute; top: ${data.y}px; left: ${data.x}px;">${child.code}</div>`
+        );
+      }}
+    >
       <Resizable
         className={styles.container}
         size={{ width: width, height: height }}
