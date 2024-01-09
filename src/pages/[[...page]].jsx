@@ -32,12 +32,13 @@ export default function Page() {
       const position = elementPositions[index];
       const childText = child.element.props.children || "";
       const elementType = child?.element.type || "div";
+      const elementSrc = child?.element.props?.src || "";
 
       return `<div style="position: absolute; top: ${
         position?.y ? position.y : 0
       }px; left: ${position?.x ? position.x : 0}px;>
       <${elementType} >
-        ${childText}
+        ${elementType === "img" ? `src="${elementSrc}"` : childText}
       </${elementType}>
       </div>`;
     });
