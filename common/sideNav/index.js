@@ -11,7 +11,7 @@ export default function SideNav({ setShowInputModal, setElement, codeToCopy }) {
   const staticChildren = [
     {
       name: "Button",
-      element: <button className={styles.button}>Button</button>,
+      element: <button className={styles.normalButton}>Button</button>,
       category: "Buttons",
       id: 1,
     },
@@ -44,21 +44,22 @@ export default function SideNav({ setShowInputModal, setElement, codeToCopy }) {
           />
         </div>
       ),
-      category: "Images",
+      category: "Media",
       src: "",
       id: 5,
     },
   ];
 
   useEffect(() => {
-    staticChildren.forEach((child) => {
-      if (groupedChildren[child.category]) {
-        groupedChildren[child.category].push(child);
+    const grouped = staticChildren.reduce((acc, curr) => {
+      if (acc[curr.category]) {
+        acc[curr.category].push(curr);
       } else {
-        groupedChildren[child.category] = [child];
+        acc[curr.category] = [curr];
       }
-    });
-    setGroupedChildren(groupedChildren);
+      return acc;
+    }, {});
+    setGroupedChildren(grouped);
   }, []);
 
   return (
@@ -108,7 +109,9 @@ export default function SideNav({ setShowInputModal, setElement, codeToCopy }) {
                       }}
                     >
                       <p className={styles.sidebarItemText}>{child.name}</p>
-                      <div className={styles.element}>{child.element}</div>
+                      <div className={styles.element} aria-disabled="true">
+                        {child.element}
+                      </div>
                     </div>
                   );
                 })}
