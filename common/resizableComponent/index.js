@@ -2,7 +2,7 @@ import styles from "./styles/index.module.css";
 import { useState } from "react";
 import { Rnd } from "react-rnd";
 
-const ResizableComponent = ({ child }) => {
+const ResizableComponent = ({ child, onDragStop }) => {
   const [fontSize, setFontSize] = useState(16);
 
   const handleFontSizeChange = (newWidth) => {
@@ -21,6 +21,7 @@ const ResizableComponent = ({ child }) => {
       onResize={(e, direction, ref, d) => {
         handleFontSizeChange(ref.offsetWidth);
       }}
+      onDragStop={(e, d) => onDragStop(e, d)}
     >
       <div className={styles.element} style={{ fontSize: `${fontSize}px` }}>
         {child.element}
