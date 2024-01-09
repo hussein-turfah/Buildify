@@ -5,6 +5,8 @@ import { useEffect, useRef, useState } from "react";
 import Nav from "../../common/Nav";
 import SideNav from "../../common/sideNav";
 import { InputModal } from "../../common/inputModal";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Page() {
   const [children, setChildren] = useState([]);
@@ -13,16 +15,42 @@ export default function Page() {
   const [element, setElement] = useState(null);
   const [codeToCopy, setCodeToCopy] = useState("");
   const codeContainerRef = useRef(null);
+  const [positions, setPositions] = useState([]);
+
+  const handleDragStop = (e, data, index) => {
+    const newPositions = [...positions];
+    newPositions[index] = { x: data.x, y: data.y };
+    setPositions(newPositions);
+  };
+
+  const getCodeToCopy = () => {
+    if (!codeContainerRef.current) return "";
+
+    const elementPositions = positions.map(({ x, y }) => ({ x, y }));
+
+    const codeWithPositions = children.map((child, index) => {
+      const position = elementPositions[index];
+
+      const childText = child.element.props.children || "";
+
+      return `<div style="position: absolute; top: ${
+        position?.y ? position.y : 0
+      }px; left: ${position?.x ? position.x : 0}px;">
+        <button
+          style=${JSON.stringify(child.element.props.style)}
+        >${childText}</button>
+      </div>`;
+    });
+
+    const innerHTML = codeWithPositions.join("");
+    return `<div>${innerHTML}</div>`;
+  };
 
   useEffect(() => {
     const codeToCopy = getCodeToCopy();
     setCodeToCopy(codeToCopy);
   }, [children]);
 
-  const getCodeToCopy = () => {
-    const innerHTML = codeContainerRef.current.children[0].innerHTML;
-    return innerHTML;
-  };
   return (
     <div className={styles.container}>
       <Head>
@@ -34,9 +62,7 @@ export default function Page() {
         setShowInputModal={setShowInputModal}
         setElement={setElement}
         codeToCopy={codeToCopy}
-      >
-        {children}
-      </SideNav>
+      />
       {showInputModal && (
         <InputModal
           text={text}
@@ -57,10 +83,12 @@ export default function Page() {
               key={index}
               className={styles.resizableComponent}
               child={child}
+              onDragStop={(e, data) => handleDragStop(e, data, index)}
             />
           );
         })}
       </div>
+      <ToastContainer />
     </div>
   );
 }
