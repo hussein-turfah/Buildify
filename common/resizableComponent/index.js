@@ -15,8 +15,6 @@ const ResizableComponent = ({ child, onDragStop }) => {
       default={{
         x: 0,
         y: 0,
-        width: 320,
-        height: 200,
       }}
       onResize={(e, direction, ref, d) => {
         handleFontSizeChange(ref.offsetWidth);
