@@ -3,6 +3,7 @@ import Selector from "../selector";
 import styles from "./styles/index.module.css";
 import ClipboardJS from "clipboard";
 import Image from "next/image";
+import { toast } from "react-toastify";
 
 export default function SideNav({ setShowInputModal, setElement, codeToCopy }) {
   const [groupedChildren, setGroupedChildren] = useState({});
@@ -137,6 +138,7 @@ export default function SideNav({ setShowInputModal, setElement, codeToCopy }) {
           data-clipboard-text={codeToCopy}
           onClick={() => {
             navigator.clipboard.writeText(codeToCopy);
+            toast.success("Code Copied to Clipboard");
           }}
         >
           Publish Code
