@@ -30,15 +30,15 @@ export default function Page() {
 
     const codeWithPositions = children.map((child, index) => {
       const position = elementPositions[index];
-
       const childText = child.element.props.children || "";
+      const elementType = child?.element.type || "div";
 
       return `<div style="position: absolute; top: ${
         position?.y ? position.y : 0
-      }px; left: ${position?.x ? position.x : 0}px;">
-        <button
-          style=${JSON.stringify(child.element.props.style)}
-        >${childText}</button>
+      }px; left: ${position?.x ? position.x : 0}px;>
+      <${elementType} >
+        ${childText}
+      </${elementType}>
       </div>`;
     });
 
