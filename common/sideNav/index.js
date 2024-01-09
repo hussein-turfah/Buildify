@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Selector from "../selector";
 import styles from "./styles/index.module.css";
-import ClipboardJS from "clipboard";
 import Image from "next/image";
 import { toast } from "react-toastify";
 
@@ -61,20 +60,6 @@ export default function SideNav({ setShowInputModal, setElement, codeToCopy }) {
     });
     setGroupedChildren(groupedChildren);
   });
-
-  useEffect(() => {
-    if (copyButtonRef.current) {
-      const clipboard = new ClipboardJS(copyButtonRef.current, {
-        text: () => codeToCopy,
-      });
-      clipboard.on("success", function (e) {
-        console.log(e);
-      });
-      clipboard.on("error", function (e) {
-        console.log(e);
-      });
-    }
-  }, [copyButtonRef, codeToCopy]);
 
   return (
     <div className={styles.sidebar}>
