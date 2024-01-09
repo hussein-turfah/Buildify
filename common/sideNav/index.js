@@ -59,7 +59,7 @@ export default function SideNav({ setShowInputModal, setElement, codeToCopy }) {
       }
     });
     setGroupedChildren(groupedChildren);
-  });
+  }, []);
 
   return (
     <div className={styles.sidebar}>
